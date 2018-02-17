@@ -22,7 +22,35 @@
 	  <div>
 	    <button onClick="logout()" class="btn btn-primary">Logout</button>
 	  </div>
+	  <div>
+	    <button onClick="getAccounts()" class="btn btn-primary">accounts</button>
+	  </div>
 	</div>
+	
+	<div class="slds-container--center slds-container--medium" style="margin-top: 60px;">
+        <div class="slds-text-heading--medium">Salesforce Accounts</div>
+
+        <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+            <thead>
+                <tr class="slds-text-title--caps">
+                    <th scope="col">
+                        <div class="slds-truncate" title="Id">Id</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Id">Name</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Id">Industry</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Id">Rating</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
 	
 	<script type="text/javascript">
 	    $.get("/user", function(data) {
@@ -39,6 +67,19 @@
 	        })
 	        return true;
 	    }
+	    var getAccounts = function() {
+	          $.get("/accounts", function(data) {
+	            $("tbody").empty();
+	            $.each(data, function(i, account) {
+	              var tr = $("<tr>");
+	              tr.append($("<td>").text(account.Id));
+	              tr.append($("<td>").text(account.Name));
+	              tr.append($("<td>").text(account.Industry));
+	              tr.append($("<td>").text(account.Rating));
+	              $("tbody").append(tr);
+	            });
+	          });
+	        };
 	    $.ajaxSetup({
 	    	beforeSend : function(xhr, settings) {
 	    	  if (settings.type == 'POST' || settings.type == 'PUT'
